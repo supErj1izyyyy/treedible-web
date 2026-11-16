@@ -14,6 +14,7 @@ import { ModelViewer } from './ModelViewer';
 import { FileUploadZone } from './FileUploadZone';
 import { ConfigurationPanel } from './ConfigurationPanel';
 import { Calculator, AlertCircle } from 'lucide-react';
+import { assetUrl } from '../../config/site';
 
 export const CalculatorSection: React.FC = () => {
   const [geometry, setGeometry] = useState<THREE.BufferGeometry | null>(null);
@@ -34,6 +35,15 @@ export const CalculatorSection: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
+      if (buffer.byteLength < 84) {
+        throw new Error('Ukuran file terlalu kecil atau rusak untuk format model 3D.');
+      }
+      const checkHeader = new Uint8Array(buffer.slice(0, 15));
+      const str = String.fromCharCode(...checkHeader);
+      if (str.includes('<html') || str.includes('<!DOC') || str.includes('<?xml')) {
+        throw new Error('File tidak ditemukan atau format tidak valid.');
+      }
+
       const ext = fileName.split('.').pop()?.toLowerCase();
       let parsedGeo: THREE.BufferGeometry | null = null;
 
@@ -106,8 +116,12 @@ export const CalculatorSection: React.FC = () => {
 
   // Load default initial sample on mount so user sees an active working 3D viewer immediately
   useEffect(() => {
-    fetch('/samples/calibration_cube.stl')
-      .then((res) => res.arrayBuffer())
+    const defaultSample = assetUrl('samples/calibration_cube.stl');
+    fetch(defaultSample)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.arrayBuffer();
+      })
       .then((buf) => {
         parseModelData(buf, 'calibration_cube_20mm.stl');
       })

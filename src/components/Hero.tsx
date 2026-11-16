@@ -1,5 +1,6 @@
 import React from 'react';
 import { Upload, ArrowDown, CheckCircle2 } from 'lucide-react';
+import { assetUrl } from '../config/site';
 
 export const Hero: React.FC = () => {
   return (
@@ -77,7 +78,7 @@ export const Hero: React.FC = () => {
               {/* Machine Photo */}
               <div className="relative mt-3 rounded-2xl overflow-hidden bg-slate-950 aspect-4/3 flex items-center justify-center">
                 <img
-                  src="/images/bambu_p1s.png"
+                  src={assetUrl('images/bambu_p1s.png')}
                   alt="Mesin 3D Printer Bambu Lab P1S milik Treedible"
                   className="w-full h-full object-contain p-2 hover:scale-105 transition-transform duration-300"
                   fetchPriority="high"

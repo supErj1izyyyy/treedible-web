@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, MessageSquare } from 'lucide-react';
-import { SITE_CONFIG } from '../config/site';
+import { SITE_CONFIG, assetUrl } from '../config/site';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -12,7 +12,7 @@ export const Navbar: React.FC = () => {
           {/* Brand Logo & Name */}
           <a href="#" className="flex items-center gap-3 group">
             <img
-              src="/images/logo.png"
+              src={assetUrl('images/logo.png')}
               alt="Logo Treedible 3D Printing"
               className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
             />

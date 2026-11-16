@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { UploadCloud, FileCode, CheckCircle2, AlertCircle } from 'lucide-react';
+import { assetUrl } from '../../config/site';
 
 interface FileUploadZoneProps {
   onFileLoaded: (file: File | { name: string; buffer: ArrayBuffer }) => void;
@@ -53,12 +54,19 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   const loadSample = async (samplePath: string, sampleName: string) => {
     try {
       setErrorMessage(null);
-      const response = await fetch(samplePath);
+      const targetUrl = assetUrl(samplePath);
+      const response = await fetch(targetUrl);
       if (!response.ok) throw new Error('Gagal memuat sampel file 3D');
       const buffer = await response.arrayBuffer();
+      // Verify buffer is not an HTML 404 page
+      const header = new Uint8Array(buffer.slice(0, 10));
+      const headerStr = String.fromCharCode(...header);
+      if (headerStr.includes('<html') || headerStr.includes('<!DOC')) {
+        throw new Error('File sampel tidak ditemukan di server.');
+      }
       onFileLoaded({ name: sampleName, buffer });
     } catch (err: any) {
-      setErrorMessage('Terjadi kendala saat memuat sampel model.');
+      setErrorMessage(err.message || 'Terjadi kendala saat memuat sampel model.');
     }
   };
 
@@ -149,7 +157,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => loadSample('/samples/calibration_cube.stl', 'calibration_cube_20mm.stl')}
+            onClick={() => loadSample('samples/calibration_cube.stl', 'calibration_cube_20mm.stl')}
             disabled={loading}
             className="text-xs px-2.5 py-1.5 bg-white hover:bg-slate-50 text-slate-800 font-medium rounded-lg border border-slate-300 transition-colors shadow-2xs hover:border-emerald-600"
           >
@@ -157,7 +165,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => loadSample('/samples/mechanical_gear.stl', 'mechanical_gear_sample.stl')}
+            onClick={() => loadSample('samples/mechanical_gear.stl', 'mechanical_gear_sample.stl')}
             disabled={loading}
             className="text-xs px-2.5 py-1.5 bg-white hover:bg-slate-50 text-slate-800 font-medium rounded-lg border border-slate-300 transition-colors shadow-2xs hover:border-emerald-600"
           >

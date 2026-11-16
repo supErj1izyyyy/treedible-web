@@ -1,6 +1,6 @@
 import React from 'react';
 import { MessageSquare, ShoppingBag, MapPin } from 'lucide-react';
-import { SITE_CONFIG } from '../config/site';
+import { SITE_CONFIG, assetUrl } from '../config/site';
 
 export const Footer: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/images/logo.png"
+                src={assetUrl('images/logo.png')}
                 alt="Logo Treedible 3D Printing"
                 className="h-10 w-auto object-contain bg-white rounded-lg p-1"
               />

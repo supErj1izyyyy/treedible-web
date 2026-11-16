@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cpu, Wrench, Building2, Palette, CheckCircle2, Sliders } from 'lucide-react';
+import { assetUrl } from '../config/site';
 
 export const ServicesSection: React.FC = () => {
   const services = [
@@ -104,7 +105,7 @@ export const ServicesSection: React.FC = () => {
 
             <div className="lg:col-span-4 flex justify-center">
               <img
-                src="/images/manufacturing.jpg"
+                src={assetUrl('images/manufacturing.jpg')}
                 alt="Proses Manufaktur Treedible di Workshop"
                 className="rounded-2xl border border-slate-700 shadow-md object-cover h-64 w-full"
                 loading="lazy"

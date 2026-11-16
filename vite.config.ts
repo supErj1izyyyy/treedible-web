@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './', // Memastikan path asset relatif agar kompatibel dengan GitHub Pages
+  base: '/treedible-web/',
   plugins: [
     react(),
     tailwindcss(),
