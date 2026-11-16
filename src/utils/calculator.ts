@@ -68,6 +68,15 @@ export const LAYER_HEIGHTS: Record<LayerHeightKey, LayerHeightInfo> = {
  * Result is in cm³ (cubic centimeters).
  */
 export function calculateMeshVolume(geometry: THREE.BufferGeometry): number {
+  geometry.computeBoundingBox();
+  const bbox = geometry.boundingBox;
+  let bboxVolumeCm3 = 1.0;
+  if (bbox) {
+    const size = new THREE.Vector3();
+    bbox.getSize(size);
+    bboxVolumeCm3 = Math.max(0.1, (size.x * size.y * size.z) / 1000.0);
+  }
+
   let volumeMm3 = 0;
   const position = geometry.attributes.position;
   const index = geometry.index;
@@ -92,7 +101,7 @@ export function calculateMeshVolume(geometry: THREE.BufferGeometry): number {
 
       volumeMm3 += getSignedVolume(p1, p2, p3);
     }
-  } else {
+  } else if (position) {
     for (let i = 0; i < position.count; i += 3) {
       p1.fromBufferAttribute(position, i);
       p2.fromBufferAttribute(position, i + 1);
@@ -102,9 +111,20 @@ export function calculateMeshVolume(geometry: THREE.BufferGeometry): number {
     }
   }
 
-  // Convert mm³ to cm³ (1 cm³ = 1000 mm³)
-  const volumeCm3 = Math.abs(volumeMm3) / 1000.0;
-  return Math.max(0.1, Number(volumeCm3.toFixed(2)));
+  const rawVolCm3 = Math.abs(volumeMm3) / 1000.0;
+
+  // Sanity check:
+  // Model 3D di dunia nyata mengisi sekitar 25% - 70% dari volume bounding box.
+  // Jika mesh tidak watertight, terbuka, atau segitiganya saling meniadakan sehingga rawVol mendekati 0,
+  // gunakan estimasi volumetrik 35% bounding box agar pertambahan dimensi selalu menaikkan harga secara realistis.
+  let validVolCm3 = rawVolCm3;
+  if (validVolCm3 < bboxVolumeCm3 * 0.05 || isNaN(validVolCm3)) {
+    validVolCm3 = bboxVolumeCm3 * 0.35;
+  } else if (validVolCm3 > bboxVolumeCm3) {
+    validVolCm3 = bboxVolumeCm3 * 0.85;
+  }
+
+  return Math.max(0.1, Number(validVolCm3.toFixed(2)));
 }
 
 /**
@@ -147,6 +167,7 @@ export function estimateFilamentWeight(
 
 /**
  * Calculates estimated price based on Treedible service tariff from Observation Report.
+ * Uses transparent linear tariff per gram based on material and layer height.
  */
 export function calculatePrintPrice(
   weightGrams: number,
@@ -161,12 +182,12 @@ export function calculatePrintPrice(
     ratePerGram += 100;
   }
 
-  // Base machine setup and nozzle prep fee per unique job
-  const setupFee = 10000;
+  // Pure linear tariff based on filament weight:
+  // e.g. PLA 0.16mm is Rp 750/g, 0.12mm is Rp 850/g, 0.20mm is Rp 500/g
   const materialCost = weightGrams * ratePerGram;
   
-  // Unit price rounds to nearest 500 IDR for clean consumer pricing
-  const unitPrice = Math.max(15000, Math.ceil((materialCost + (setupFee / quantity)) / 500) * 500);
+  // Unit price rounds to nearest 500 IDR with minimal floor of Rp 1.000
+  const unitPrice = Math.max(1000, Math.ceil(materialCost / 500) * 500);
   const totalPrice = unitPrice * quantity;
 
   return { unitPrice, totalPrice, ratePerGram };
@@ -209,13 +230,15 @@ export function generateWhatsAppLink(
   infillPct: number,
   color: string,
   quantity: number,
-  totalPrice: number
+  totalPrice: number,
+  scalePct: number = 100
 ): string {
   const phone = SITE_CONFIG.whatsappNumber;
+  const scaleInfo = scalePct !== 100 ? `\nSkala Cetak: ${scalePct}%` : '';
   const message = `Halo Admin Treedible 3D Printing, saya ingin konsultasi dan cetak file 3D dengan rincian berikut:
 
 Nama File: ${fileName}
-Dimensi Model: ${dimensions.x} x ${dimensions.y} x ${dimensions.z} mm
+Dimensi Model: ${dimensions.x} x ${dimensions.y} x ${dimensions.z} mm${scaleInfo}
 Volume Geometris: ${volumeCm3} cm³
 Material: ${materialKey} (${MATERIALS[materialKey].fullName})
 Warna: ${color}

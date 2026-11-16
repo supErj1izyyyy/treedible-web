@@ -1,7 +1,7 @@
 import React from 'react';
 import type { MaterialKey, LayerHeightKey, ModelMetrics } from '../../types';
 import { MATERIALS, LAYER_HEIGHTS, formatRupiah, generateWhatsAppLink } from '../../utils/calculator';
-import { Layers, Disc, Scale, Clock, MessageSquare, ShieldCheck } from 'lucide-react';
+import { Layers, Disc, Scale, Clock, MessageSquare, ShieldCheck, Maximize2 } from 'lucide-react';
 
 interface ConfigurationPanelProps {
   metrics: ModelMetrics | null;
@@ -13,11 +13,14 @@ interface ConfigurationPanelProps {
   onChangeInfill: (val: number) => void;
   selectedColor: string;
   onChangeColor: (col: string) => void;
+  scalePct: number;
+  onChangeScale: (scale: number) => void;
   quantity: number;
   onChangeQuantity: (qty: number) => void;
   estimatedWeightGrams: number;
   unitPrice: number;
   totalPrice: number;
+  ratePerGram: number;
   estimatedHours: number;
 }
 
@@ -31,11 +34,14 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
   onChangeInfill,
   selectedColor,
   onChangeColor,
+  scalePct,
+  onChangeScale,
   quantity,
   onChangeQuantity,
   estimatedWeightGrams,
   unitPrice,
   totalPrice,
+  ratePerGram,
   estimatedHours
 }) => {
   const currentMaterial = MATERIALS[material];
@@ -52,7 +58,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
       infillPct,
       selectedColor,
       quantity,
-      totalPrice
+      totalPrice,
+      scalePct
     );
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -173,61 +180,105 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
         </div>
       </div>
 
-      {/* 3. Infill Density & Quantity */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Infill */}
-        <div>
+      {/* 3. Scale, Infill Density & Quantity */}
+      <div className="space-y-4">
+        {/* Scale Slider & Quick Presets */}
+        <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-xs font-bold text-slate-900 dark:text-white">
-              Kerapatan Infill: <span className="text-emerald-700 dark:text-emerald-400 font-mono-tech">{infillPct}%</span>
+            <label className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+              <Maximize2 className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
+              Skala Dimensi Model: <span className="text-emerald-700 dark:text-emerald-400 font-mono-tech">{scalePct}%</span>
             </label>
             <span className="text-[11px] text-slate-500 dark:text-slate-400">
-              {infillPct <= 20 ? 'Standar Display' : infillPct <= 50 ? 'Fungsional Kuat' : 'Solid Maksimal'}
+              {scalePct === 100 ? 'Ukuran Asli (1.0x)' : scalePct < 100 ? `Dikecilkan (${(scalePct/100).toFixed(2)}x)` : `Diperbesar (${(scalePct/100).toFixed(2)}x)`}
             </span>
           </div>
           <input
             type="range"
-            min="10"
-            max="100"
+            min="25"
+            max="250"
             step="5"
-            value={infillPct}
-            onChange={(e) => onChangeInfill(Number(e.target.value))}
+            value={scalePct}
+            onChange={(e) => onChangeScale(Number(e.target.value))}
             className="w-full accent-emerald-700 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg"
           />
-          <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-            <span>10% (Ringan)</span>
-            <span>20% (Umum)</span>
-            <span>50% (Teknik)</span>
-            <span>100%</span>
+          <div className="flex items-center justify-between mt-2 pt-1 border-t border-slate-200 dark:border-slate-700/60">
+            <span className="text-[10px] text-slate-400">Pilihan Cepat:</span>
+            <div className="flex items-center gap-1.5">
+              {[50, 75, 100, 150, 200].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => onChangeScale(preset)}
+                  className={`text-[10px] px-2 py-0.5 rounded border transition-colors font-mono-tech ${
+                    scalePct === preset
+                      ? 'bg-emerald-700 text-white border-emerald-800 font-bold'
+                      : 'bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-600'
+                  }`}
+                >
+                  {preset}%
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Quantity */}
-        <div>
-          <label className="text-xs font-bold text-slate-900 dark:text-white block mb-1.5">
-            Jumlah Unit (Qty):
-          </label>
-          <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 overflow-hidden w-fit">
-            <button
-              type="button"
-              onClick={() => onChangeQuantity(Math.max(1, quantity - 1))}
-              disabled={quantity <= 1}
-              className="px-3.5 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 font-bold transition-colors"
-              aria-label="Kurangi jumlah"
-            >
-              -
-            </button>
-            <span className="px-4 py-1.5 font-bold text-slate-900 dark:text-white font-mono-tech text-sm min-w-10 text-center">
-              {quantity}
-            </span>
-            <button
-              type="button"
-              onClick={() => onChangeQuantity(quantity + 1)}
-              className="px-3.5 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition-colors"
-              aria-label="Tambah jumlah"
-            >
-              +
-            </button>
+        {/* Infill & Quantity */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Infill */}
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-xs font-bold text-slate-900 dark:text-white">
+                Kerapatan Infill: <span className="text-emerald-700 dark:text-emerald-400 font-mono-tech">{infillPct}%</span>
+              </label>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                {infillPct <= 20 ? 'Standar Display' : infillPct <= 50 ? 'Fungsional Kuat' : 'Solid Maksimal'}
+              </span>
+            </div>
+            <input
+              type="range"
+              min="10"
+              max="100"
+              step="5"
+              value={infillPct}
+              onChange={(e) => onChangeInfill(Number(e.target.value))}
+              className="w-full accent-emerald-700 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg"
+            />
+            <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>10% (Ringan)</span>
+              <span>20% (Umum)</span>
+              <span>50% (Teknik)</span>
+              <span>100%</span>
+            </div>
+          </div>
+
+          {/* Quantity */}
+          <div>
+            <label className="text-xs font-bold text-slate-900 dark:text-white block mb-1.5">
+              Jumlah Unit (Qty):
+            </label>
+            <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 overflow-hidden w-fit">
+              <button
+                type="button"
+                onClick={() => onChangeQuantity(Math.max(1, quantity - 1))}
+                disabled={quantity <= 1}
+                className="px-3.5 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 font-bold transition-colors"
+                aria-label="Kurangi jumlah"
+              >
+                -
+              </button>
+              <span className="px-4 py-1.5 font-bold text-slate-900 dark:text-white font-mono-tech text-sm min-w-10 text-center">
+                {quantity}
+              </span>
+              <button
+                type="button"
+                onClick={() => onChangeQuantity(quantity + 1)}
+                className="px-3.5 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition-colors"
+                aria-label="Tambah jumlah"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -260,7 +311,9 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
           <div className="flex items-end justify-between pt-3">
             <div>
               <span className="text-xs text-slate-300 block font-medium">Perkiraan Biaya Cetak</span>
-              <span className="text-[11px] text-slate-400">Termasuk prep mesin Bambu Lab P1S</span>
+              <span className="text-[11px] text-emerald-400 font-mono-tech font-medium">
+                Tarif resmi: {formatRupiah(ratePerGram)}/gram
+              </span>
             </div>
             <div className="text-right">
               <span className="text-2xl font-extrabold text-emerald-400 font-mono-tech block">

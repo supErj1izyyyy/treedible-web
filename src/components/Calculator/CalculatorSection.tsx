@@ -29,11 +29,13 @@ export const CalculatorSection: React.FC = () => {
   const [selectedColor, setSelectedColor] = useState<string>('Hitam Doff');
   const [quantity, setQuantity] = useState<number>(1);
   const [wireframe, setWireframe] = useState<boolean>(false);
+  const [scalePct, setScalePct] = useState<number>(100);
 
   // Parse Buffer into Three.js BufferGeometry
   const parseModelData = (buffer: ArrayBuffer, fileName: string) => {
     setLoading(true);
     setError(null);
+    setScalePct(100);
     try {
       if (buffer.byteLength < 84) {
         throw new Error('Ukuran file terlalu kecil atau rusak untuk format model 3D.');
@@ -128,11 +130,21 @@ export const CalculatorSection: React.FC = () => {
       .catch((e) => console.log('Sample load error:', e));
   }, []);
 
-  // Compute Live Calculated Values
-  const volume = metrics ? metrics.volumeCm3 : 8.0;
-  const estimatedWeightGrams = estimateFilamentWeight(volume, material, infillPct);
-  const { unitPrice, totalPrice } = calculatePrintPrice(estimatedWeightGrams, material, layerHeight, quantity);
+  // Compute Live Calculated Values with dynamic scale factor
+  const currentScale = scalePct / 100;
+  const rawVolume = metrics ? metrics.volumeCm3 : 8.0;
+  // Volume scales cubically with geometric scale (s³)
+  const scaledVolume = Number((rawVolume * Math.pow(currentScale, 3)).toFixed(2));
+  const estimatedWeightGrams = estimateFilamentWeight(scaledVolume, material, infillPct);
+  const { unitPrice, totalPrice, ratePerGram } = calculatePrintPrice(estimatedWeightGrams, material, layerHeight, quantity);
   const estimatedHours = estimatePrintTimeHours(estimatedWeightGrams, layerHeight);
+
+  // Scaled dimensions in mm
+  const scaledDimensions = metrics ? {
+    x: Number((metrics.dimensionsMm.x * currentScale).toFixed(1)),
+    y: Number((metrics.dimensionsMm.y * currentScale).toFixed(1)),
+    z: Number((metrics.dimensionsMm.z * currentScale).toFixed(1))
+  } : null;
 
   // Map selected color to CSS/Three hex
   const getRenderColor = (colorName: string) => {
@@ -203,15 +215,20 @@ export const CalculatorSection: React.FC = () => {
               materialColor={getRenderColor(selectedColor)}
               wireframe={wireframe}
               onToggleWireframe={() => setWireframe(!wireframe)}
-              dimensions={metrics?.dimensionsMm || null}
+              dimensions={scaledDimensions}
               loading={loading}
+              scale={currentScale}
             />
           </div>
 
           {/* Right Column: 5 Cols (Pricing & Parameters) */}
           <div className="lg:col-span-5">
             <ConfigurationPanel
-              metrics={metrics}
+              metrics={metrics ? {
+                ...metrics,
+                volumeCm3: scaledVolume,
+                dimensionsMm: scaledDimensions || metrics.dimensionsMm
+              } : null}
               material={material}
               onChangeMaterial={setMaterial}
               layerHeight={layerHeight}
@@ -220,11 +237,14 @@ export const CalculatorSection: React.FC = () => {
               onChangeInfill={setInfillPct}
               selectedColor={selectedColor}
               onChangeColor={setSelectedColor}
+              scalePct={scalePct}
+              onChangeScale={setScalePct}
               quantity={quantity}
               onChangeQuantity={setQuantity}
               estimatedWeightGrams={estimatedWeightGrams}
               unitPrice={unitPrice}
               totalPrice={totalPrice}
+              ratePerGram={ratePerGram}
               estimatedHours={estimatedHours}
             />
           </div>

@@ -11,6 +11,7 @@ interface ModelViewerProps {
   onToggleWireframe: () => void;
   dimensions: { x: number; y: number; z: number } | null;
   loading: boolean;
+  scale?: number;
 }
 
 export const ModelViewer: React.FC<ModelViewerProps> = ({
@@ -19,7 +20,8 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
   wireframe,
   onToggleWireframe,
   dimensions,
-  loading
+  loading,
+  scale = 1
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -188,6 +190,8 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     const mesh = new THREE.Mesh(geometry, material);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
+    const initialScale = scale && scale > 0 ? scale : 1;
+    mesh.scale.set(initialScale, initialScale, initialScale);
     sceneRef.current.add(mesh);
     meshRef.current = mesh;
 
@@ -202,6 +206,13 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     controlsRef.current.update();
 
   }, [geometry]);
+
+  // Update scale dynamically
+  useEffect(() => {
+    if (!meshRef.current) return;
+    const s = scale && scale > 0 ? scale : 1;
+    meshRef.current.scale.set(s, s, s);
+  }, [scale]);
 
   // Update material color and wireframe dynamically
   useEffect(() => {
@@ -281,22 +292,29 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
       {/* Dimensions Overlay on Bottom-Left */}
       {dimensions && (
         <div className="absolute bottom-4 left-4 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xs border border-slate-300 dark:border-slate-700 rounded-xl p-3 shadow-md text-xs text-slate-700 dark:text-slate-300">
-          <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white mb-1.5 border-b border-slate-200 dark:border-slate-700 pb-1">
-            <Maximize2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
-            Dimensi Bounding Box Fisik
+          <div className="flex items-center justify-between gap-2 font-bold text-slate-900 dark:text-white mb-1.5 border-b border-slate-200 dark:border-slate-700 pb-1">
+            <span className="flex items-center gap-1.5">
+              <Maximize2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+              Dimensi Fisik {scale !== 1 && `(${Math.round(scale * 100)}%)`}
+            </span>
+            {(dimensions.x > 256 || dimensions.y > 256 || dimensions.z > 256) && (
+              <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">
+                Melebihi Bed
+              </span>
+            )}
           </div>
           <div className="grid grid-cols-3 gap-2 font-mono-tech">
-            <div className="bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 text-center">
+            <div className={`px-2 py-1 rounded border text-center ${dimensions.x > 256 ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 text-amber-700 dark:text-amber-400' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'}`}>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Panjang (X)</span>
-              <span className="font-semibold text-slate-900 dark:text-white">{dimensions.x} mm</span>
+              <span className="font-semibold">{dimensions.x} mm</span>
             </div>
-            <div className="bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 text-center">
+            <div className={`px-2 py-1 rounded border text-center ${dimensions.y > 256 ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 text-amber-700 dark:text-amber-400' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'}`}>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Lebar (Y)</span>
-              <span className="font-semibold text-slate-900 dark:text-white">{dimensions.y} mm</span>
+              <span className="font-semibold">{dimensions.y} mm</span>
             </div>
-            <div className="bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 text-center">
+            <div className={`px-2 py-1 rounded border text-center ${dimensions.z > 256 ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 text-amber-700 dark:text-amber-400' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'}`}>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Tinggi (Z)</span>
-              <span className="font-semibold text-slate-900 dark:text-white">{dimensions.z} mm</span>
+              <span className="font-semibold">{dimensions.z} mm</span>
             </div>
           </div>
         </div>
