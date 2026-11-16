@@ -4,27 +4,27 @@ import { assetUrl } from '../config/site';
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative overflow-hidden bg-white pt-10 pb-16 md:pt-16 md:pb-24">
+    <section className="relative overflow-hidden bg-white dark:bg-slate-950 pt-10 pb-16 md:pt-16 md:pb-24 transition-colors">
       {/* Background Subtle Ambient Shape */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-emerald-50/80 pointer-events-none blur-3xl"></div>
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-emerald-50/80 dark:bg-emerald-950/30 pointer-events-none blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Content: 7 Cols */}
           <div className="lg:col-span-7 space-y-6">
             {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
               <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
               <span>Layanan 3D Printing Malang, Siap Kirim Seluruh Indonesia</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.12]">
               Cetak Desain 3D Presisi Tinggi dengan Estimasi Biaya Instan.
             </h1>
 
-            {/* Subheadline without em dashes */}
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
               Didukung mesin industri modern Bambu Lab P1S untuk hasil detail, kuat, dan minim deviasi dimensi. Cukup unggah file desain 3D (.STL / .OBJ) untuk mengetahui volume, estimasi gramasi, dan perkiraan biaya seketika.
             </p>
 
@@ -39,26 +39,26 @@ export const Hero: React.FC = () => {
               </a>
               <a
                 href="#material"
-                className="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm rounded-xl inline-flex items-center gap-2 transition-colors border border-slate-200"
+                className="px-6 py-3.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm rounded-xl inline-flex items-center gap-2 transition-colors border border-slate-200 dark:border-slate-700"
               >
                 <span>Lihat Pilihan Bahan</span>
-                <ArrowDown className="w-4 h-4 text-slate-500" aria-hidden="true" />
+                <ArrowDown className="w-4 h-4 text-slate-500 dark:text-slate-400" aria-hidden="true" />
               </a>
             </div>
 
             {/* Key Value Points */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-slate-100">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" aria-hidden="true" />
-                <span className="text-xs font-semibold text-slate-700">Mesin Bambu Lab P1S</span>
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" aria-hidden="true" />
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Mesin Bambu Lab P1S</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" aria-hidden="true" />
-                <span className="text-xs font-semibold text-slate-700">Layer Halus hingga 0.12 mm</span>
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" aria-hidden="true" />
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Layer Halus hingga 0.12 mm</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" aria-hidden="true" />
-                <span className="text-xs font-semibold text-slate-700">Tarif Transparan per Gram</span>
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" aria-hidden="true" />
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Tarif Transparan per Gram</span>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
                 />
                 <div className="absolute bottom-3 left-3 bg-slate-900/90 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
                   <span className="text-emerald-400 font-bold block">Kecepatan hingga 500 mm/s</span>
-                  <span className="text-[10px] text-slate-300">Enclosed Chamber untuk cetak ABS & PETG</span>
+                  <span className="text-[10px] text-slate-300">Enclosed Chamber untuk cetak stabil & presisi</span>
                 </div>
               </div>
 
@@ -97,7 +97,7 @@ export const Hero: React.FC = () => {
                 </div>
                 <div className="p-2.5 bg-slate-800/80 rounded-xl border border-slate-700/60">
                   <span className="text-slate-400 text-[10px] block">Material Siap Cetak</span>
-                  <span className="font-bold text-slate-100">PLA, PETG, ABS</span>
+                  <span className="font-bold text-slate-100">PLA & PETG</span>
                 </div>
               </div>
             </div>

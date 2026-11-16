@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="#material" className="hover:text-emerald-400 transition-colors">
-                  Komparasi Bahan (PLA, PETG, ABS)
+                  Komparasi Bahan (PLA & PETG)
                 </a>
               </li>
               <li>

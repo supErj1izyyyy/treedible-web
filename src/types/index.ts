@@ -1,4 +1,4 @@
-export type MaterialKey = 'PLA' | 'PETG' | 'ABS';
+export type MaterialKey = 'PLA' | 'PETG';
 
 export type LayerHeightKey = '0.12' | '0.16' | '0.20';
 

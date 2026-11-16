@@ -87,10 +87,10 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
         }}
         className={`relative border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
           isDragOver
-            ? 'border-emerald-600 bg-emerald-50/80 scale-[1.01]'
+            ? 'border-emerald-600 bg-emerald-50/80 dark:bg-emerald-950/40 scale-[1.01]'
             : currentFileName
-            ? 'border-emerald-500/70 bg-emerald-50/30 hover:border-emerald-600'
-            : 'border-slate-300 bg-white hover:border-slate-400 hover:bg-slate-50'
+            ? 'border-emerald-500/70 bg-emerald-50/30 dark:bg-emerald-950/20 hover:border-emerald-600'
+            : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-850'
         }`}
       >
         <input
@@ -104,10 +104,12 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
 
         <div className="flex flex-col items-center justify-center gap-3">
           <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
-            currentFileName ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'
+            currentFileName 
+              ? 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300' 
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
           }`}>
             {currentFileName ? (
-              <CheckCircle2 className="w-7 h-7 text-emerald-600" aria-hidden="true" />
+              <CheckCircle2 className="w-7 h-7 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
             ) : (
               <UploadCloud className="w-7 h-7" aria-hidden="true" />
             )}
@@ -116,25 +118,25 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           <div>
             {currentFileName ? (
               <div>
-                <p className="text-xs font-semibold text-emerald-700 tracking-wide uppercase">File Terpasang</p>
-                <p className="text-base font-bold text-slate-900 mt-0.5 break-all">{currentFileName}</p>
-                <p className="text-xs text-slate-500 mt-1">Klik atau seret file lain untuk mengganti</p>
+                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 tracking-wide uppercase">File Terpasang</p>
+                <p className="text-base font-bold text-slate-900 dark:text-white mt-0.5 break-all">{currentFileName}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Klik atau seret file lain untuk mengganti</p>
               </div>
             ) : (
               <div>
-                <p className="text-base font-bold text-slate-900">
+                <p className="text-base font-bold text-slate-900 dark:text-white">
                   Tarik & Lepas File 3D (.STL / .OBJ) di sini
                 </p>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                   Atau klik untuk memilih file dari komputer atau ponsel kamu
                 </p>
               </div>
             )}
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
-            <span className="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">.STL (Binary/ASCII)</span>
-            <span className="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">.OBJ</span>
+          <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+            <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">.STL (Binary/ASCII)</span>
+            <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">.OBJ</span>
             <span>Maksimal 50 MB</span>
           </div>
         </div>
@@ -142,16 +144,16 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
 
       {/* Error Message */}
       {errorMessage && (
-        <div className="mt-2.5 p-3 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2 text-xs text-red-700 font-medium">
+        <div className="mt-2.5 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 flex items-center gap-2 text-xs text-red-700 dark:text-red-300 font-medium">
           <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* Quick Sample Selector */}
-      <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-100/90 rounded-xl border border-slate-200">
-        <div className="flex items-center gap-1.5 text-xs text-slate-600 font-medium">
-          <FileCode className="w-4 h-4 text-emerald-700" aria-hidden="true" />
+      <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-100/90 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 font-medium">
+          <FileCode className="w-4 h-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
           <span>Belum punya file 3D? Uji coba contoh instan:</span>
         </div>
         <div className="flex items-center gap-2">
@@ -159,7 +161,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             type="button"
             onClick={() => loadSample('samples/calibration_cube.stl', 'calibration_cube_20mm.stl')}
             disabled={loading}
-            className="text-xs px-2.5 py-1.5 bg-white hover:bg-slate-50 text-slate-800 font-medium rounded-lg border border-slate-300 transition-colors shadow-2xs hover:border-emerald-600"
+            className="text-xs px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 font-medium rounded-lg border border-slate-300 dark:border-slate-700 transition-colors shadow-2xs hover:border-emerald-600"
           >
             Kubus Kalibrasi (20 mm)
           </button>
@@ -167,7 +169,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             type="button"
             onClick={() => loadSample('samples/mechanical_gear.stl', 'mechanical_gear_sample.stl')}
             disabled={loading}
-            className="text-xs px-2.5 py-1.5 bg-white hover:bg-slate-50 text-slate-800 font-medium rounded-lg border border-slate-300 transition-colors shadow-2xs hover:border-emerald-600"
+            className="text-xs px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 font-medium rounded-lg border border-slate-300 dark:border-slate-700 transition-colors shadow-2xs hover:border-emerald-600"
           >
             Gir Roda Gigi
           </button>

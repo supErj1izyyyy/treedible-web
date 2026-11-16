@@ -58,18 +58,18 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between space-y-6">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm flex flex-col justify-between space-y-6 transition-colors">
       {/* 1. Material Selection */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <Disc className="w-4 h-4 text-emerald-700" aria-hidden="true" />
+          <label className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+            <Disc className="w-4 h-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
             1. Pilih Bahan Filament
           </label>
-          <span className="text-xs text-slate-500 font-medium">Densitas: {currentMaterial.density} g/cm³</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Densitas: {currentMaterial.density} g/cm³</span>
         </div>
 
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 gap-3">
           {(Object.keys(MATERIALS) as MaterialKey[]).map((key) => {
             const mat = MATERIALS[key];
             const isSelected = material === key;
@@ -83,18 +83,18 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
                 }}
                 className={`p-3 rounded-xl border text-left transition-all relative ${
                   isSelected
-                    ? 'border-emerald-700 bg-emerald-50/70 text-emerald-950 shadow-xs ring-1 ring-emerald-700'
-                    : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100/70 text-slate-800'
+                    ? 'border-emerald-700 dark:border-emerald-500 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 shadow-xs ring-1 ring-emerald-700 dark:ring-emerald-500'
+                    : 'border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-extrabold text-sm">{mat.name}</span>
                   {isSelected && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400"></span>
                   )}
                 </div>
-                <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{mat.bestFor.split(',')[0]}</p>
-                <div className="mt-2 text-[11px] font-semibold text-emerald-800">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">{mat.bestFor.split(',')[0]}</p>
+                <div className="mt-2 text-[11px] font-semibold text-emerald-800 dark:text-emerald-400">
                   Mulai {formatRupiah(mat.basePricePerGram)}/g
                 </div>
               </button>
@@ -103,8 +103,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
         </div>
 
         {/* Selected Material Color Choice */}
-        <div className="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
-          <label className="text-xs font-semibold text-slate-700 block mb-2">
+        <div className="mt-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800">
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-2">
             Pilihan Warna ({currentMaterial.name}):
           </label>
           <div className="flex flex-wrap gap-2">
@@ -115,8 +115,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
                 onClick={() => onChangeColor(col)}
                 className={`text-xs px-2.5 py-1.5 rounded-lg border font-medium transition-colors ${
                   selectedColor === col
-                    ? 'bg-slate-900 text-white border-slate-900'
-                    : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                    ? 'bg-slate-900 dark:bg-emerald-700 text-white border-slate-900 dark:border-emerald-700'
+                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300'
                 }`}
               >
                 {col}
@@ -129,8 +129,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
       {/* 2. Layer Height / Quality Selection */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <Layers className="w-4 h-4 text-emerald-700" aria-hidden="true" />
+          <label className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+            <Layers className="w-4 h-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
             2. Kualitas Cetak (Layer Height)
           </label>
         </div>
@@ -144,8 +144,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
                 key={key}
                 className={`flex items-start justify-between p-3 rounded-xl border transition-all cursor-pointer ${
                   isSelected
-                    ? 'border-emerald-700 bg-emerald-50/50 shadow-xs ring-1 ring-emerald-700'
-                    : 'border-slate-200 bg-white hover:bg-slate-50'
+                    ? 'border-emerald-700 dark:border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/30 shadow-xs ring-1 ring-emerald-700 dark:ring-emerald-500'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -158,12 +158,12 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
                     className="mt-0.5 accent-emerald-700"
                   />
                   <div>
-                    <span className="font-bold text-xs text-slate-900">{layer.label}</span>
-                    <p className="text-[11px] text-slate-500 mt-0.5">{layer.description}</p>
+                    <span className="font-bold text-xs text-slate-900 dark:text-white">{layer.label}</span>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{layer.description}</p>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <span className="text-xs font-bold text-emerald-800 font-mono-tech">
+                  <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400 font-mono-tech">
                     {formatRupiah(layer.pricePerGramPla.base)}/g
                   </span>
                 </div>
@@ -178,10 +178,10 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
         {/* Infill */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-xs font-bold text-slate-900">
-              Kerapatan Infill: <span className="text-emerald-700 font-mono-tech">{infillPct}%</span>
+            <label className="text-xs font-bold text-slate-900 dark:text-white">
+              Kerapatan Infill: <span className="text-emerald-700 dark:text-emerald-400 font-mono-tech">{infillPct}%</span>
             </label>
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400">
               {infillPct <= 20 ? 'Standar Display' : infillPct <= 50 ? 'Fungsional Kuat' : 'Solid Maksimal'}
             </span>
           </div>
@@ -192,7 +192,7 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
             step="5"
             value={infillPct}
             onChange={(e) => onChangeInfill(Number(e.target.value))}
-            className="w-full accent-emerald-700 cursor-pointer h-2 bg-slate-200 rounded-lg"
+            className="w-full accent-emerald-700 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg"
           />
           <div className="flex justify-between text-[10px] text-slate-400 mt-1">
             <span>10% (Ringan)</span>
@@ -204,26 +204,26 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
 
         {/* Quantity */}
         <div>
-          <label className="text-xs font-bold text-slate-900 block mb-1.5">
+          <label className="text-xs font-bold text-slate-900 dark:text-white block mb-1.5">
             Jumlah Unit (Qty):
           </label>
-          <div className="flex items-center border border-slate-300 rounded-xl bg-white overflow-hidden w-fit">
+          <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 overflow-hidden w-fit">
             <button
               type="button"
               onClick={() => onChangeQuantity(Math.max(1, quantity - 1))}
               disabled={quantity <= 1}
-              className="px-3.5 py-1.5 text-slate-700 hover:bg-slate-100 disabled:opacity-40 font-bold transition-colors"
+              className="px-3.5 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 font-bold transition-colors"
               aria-label="Kurangi jumlah"
             >
               -
             </button>
-            <span className="px-4 py-1.5 font-bold text-slate-900 font-mono-tech text-sm min-w-10 text-center">
+            <span className="px-4 py-1.5 font-bold text-slate-900 dark:text-white font-mono-tech text-sm min-w-10 text-center">
               {quantity}
             </span>
             <button
               type="button"
               onClick={() => onChangeQuantity(quantity + 1)}
-              className="px-3.5 py-1.5 text-slate-700 hover:bg-slate-100 font-bold transition-colors"
+              className="px-3.5 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold transition-colors"
               aria-label="Tambah jumlah"
             >
               +
@@ -233,8 +233,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
       </div>
 
       {/* 4. Calculation Summary Breakdown */}
-      <div className="pt-4 border-t border-slate-200">
-        <div className="bg-slate-900 text-white rounded-xl p-4 shadow-sm">
+      <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+        <div className="bg-slate-900 dark:bg-slate-950 text-white rounded-xl p-4 shadow-sm border border-slate-800">
           <div className="grid grid-cols-2 gap-3 text-xs pb-3 border-b border-slate-800">
             <div>
               <span className="text-slate-400 flex items-center gap-1">
@@ -281,13 +281,13 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
             type="button"
             onClick={handleWhatsAppClick}
             disabled={!metrics}
-            className="w-full py-3.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md disabled:bg-slate-300 disabled:cursor-not-allowed text-sm"
+            className="w-full py-3.5 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md disabled:bg-slate-300 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-sm"
           >
             <MessageSquare className="w-5 h-5" aria-hidden="true" />
             {metrics ? 'Lanjut Konsultasi & Pesan via WhatsApp' : 'Unggah File 3D untuk Melanjutkan'}
           </button>
-          <div className="flex items-center gap-1.5 text-[11px] text-slate-500 mt-2 justify-center">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" />
+          <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 mt-2 justify-center">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
             <span>Estimasi cepat berdasarkan tarif resmi Treedible. Konfirmasi akhir via slicing Bambu Studio.</span>
           </div>
         </div>

@@ -13,7 +13,7 @@ export const ServicesSection: React.FC = () => {
     {
       icon: Wrench,
       title: 'Sparepart & Komponen Fungsional',
-      desc: 'Cetak suku cadang pengganti yang sudah langka atau modifikasi komponen mekanik khusus menggunakan material kuat PETG dan ABS.',
+      desc: 'Cetak suku cadang pengganti yang sudah langka atau modifikasi komponen mekanik khusus menggunakan material kuat PETG.',
       points: ['Ketahanan benturan tinggi', 'Tahan gesek dan getaran', 'Presisi ulir dan lubang baut']
     },
     {
@@ -31,18 +31,18 @@ export const ServicesSection: React.FC = () => {
   ];
 
   return (
-    <section id="layanan" className="py-16 md:py-24 bg-slate-50 border-t border-slate-200">
+    <section id="layanan" className="py-16 md:py-24 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mb-3 border border-emerald-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 mb-3 border border-emerald-200 dark:border-emerald-800">
             <Sliders className="w-3.5 h-3.5" aria-hidden="true" />
             Layanan Spesialis Treedible
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Solusi Cetak 3D untuk Kebutuhan Akademis dan Industri
           </h2>
-          <p className="mt-3 text-base text-slate-600">
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
             Mulai dari satu unit purwarupa hingga pesanan batch kecil, kami memastikan setiap lapis tercetak sempurna sesuai spesifikasi CAD kamu.
           </p>
         </div>
@@ -54,17 +54,17 @@ export const ServicesSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-slate-200 p-8 shadow-xs hover:border-slate-300 transition-all hover:shadow-sm"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all hover:shadow-sm"
               >
-                <div className="w-12 h-12 rounded-xl bg-emerald-100/80 text-emerald-800 flex items-center justify-center mb-5">
+                <div className="w-12 h-12 rounded-xl bg-emerald-100/80 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center mb-5">
                   <IconComp className="w-6 h-6" aria-hidden="true" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2.5">{srv.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed mb-6">{srv.desc}</p>
-                <div className="space-y-2 border-t border-slate-100 pt-4">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2.5">{srv.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">{srv.desc}</p>
+                <div className="space-y-2 border-t border-slate-100 dark:border-slate-800 pt-4">
                   {srv.points.map((pt, pIdx) => (
-                    <div key={pIdx} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" aria-hidden="true" />
+                    <div key={pIdx} className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" aria-hidden="true" />
                       <span>{pt}</span>
                     </div>
                   ))}
@@ -75,7 +75,7 @@ export const ServicesSection: React.FC = () => {
         </div>
 
         {/* Hardware Capability Box */}
-        <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-800">
+        <div className="bg-slate-900 dark:bg-slate-900/90 text-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-800">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <span className="text-xs font-mono-tech text-emerald-400 uppercase tracking-wider font-semibold block">
@@ -85,7 +85,7 @@ export const ServicesSection: React.FC = () => {
                 Teknologi Bambu Lab P1S dengan Chamber Tertutup
               </h3>
               <p className="text-sm text-slate-300 leading-relaxed max-w-2xl">
-                Bambu Lab P1S dilengkapi sistem pendingin aktif ganda, kompensasi getaran otomatis (Input Shaping), dan sensor auto bed-leveling. Ruang tertutup menjaga suhu ambient tetap stabil sehingga material bersuhu tinggi seperti ABS dan PETG tidak mengalami keretakan atau pemuaian antar layer.
+                Bambu Lab P1S dilengkapi sistem pendingin aktif ganda, kompensasi getaran otomatis (Input Shaping), dan sensor auto bed-leveling. Ruang tertutup menjaga suhu ambient tetap stabil sehingga material tangguh seperti PETG tidak mengalami keretakan atau pemuaian antar layer.
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800 text-xs">
                 <div>

@@ -162,18 +162,18 @@ export const CalculatorSection: React.FC = () => {
   };
 
   return (
-    <section id="kalkulator" className="py-16 md:py-24 bg-slate-50 border-t border-b border-slate-200">
+    <section id="kalkulator" className="py-16 md:py-24 bg-slate-50 dark:bg-slate-950 border-t border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mb-3 border border-emerald-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 mb-3 border border-emerald-200 dark:border-emerald-800">
             <Calculator className="w-3.5 h-3.5" aria-hidden="true" />
             Fitur Pembeda Treedible
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Kalkulator & Estimator Harga 3D Instan
           </h2>
-          <p className="mt-3 text-base text-slate-600">
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
             Tidak perlu menunggu balasan manual untuk mengetahui perkiraan biaya. Cukup unggah file desain 3D (.STL / .OBJ), sistem kami akan mengukur volume solid dan menghitung tarif filament secara real-time.
           </p>
         </div>

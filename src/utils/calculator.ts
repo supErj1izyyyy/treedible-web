@@ -29,24 +29,9 @@ export const MATERIALS: Record<MaterialKey, MaterialInfo> = {
     flexibilityRating: 3.5,
     detailRating: 4,
     bestFor: 'Komponen mekanis fungsional, wadah tahan air, part outdoor',
-    description: 'Kombinasi kemudahan cetak PLA dengan ketahanan benturan mendekati ABS. Sangat ulet, tahan cuaca, dan tahan paparan bahan kimia ringan.',
+    description: 'Kombinasi kemudahan cetak PLA dengan ketahanan benturan tinggi. Sangat ulet, tahan cuaca, dan tahan paparan bahan kimia ringan.',
     colorOptions: ['Hitam Pekat', 'Transparan/Bening', 'Abu-Abu', 'Biru'],
     imageSrc: '/images/petg_sample.png'
-  },
-  ABS: {
-    key: 'ABS',
-    name: 'ABS',
-    fullName: 'Acrylonitrile Butadiene Styrene',
-    density: 1.04, // g/cm³
-    basePricePerGram: 900,
-    tempResistance: '90°C - 100°C',
-    strengthRating: 4.8,
-    flexibilityRating: 3,
-    detailRating: 3.8,
-    bestFor: 'Part otomotif, enclosure elektronik bersuhu hangat, part tahan gesek',
-    description: 'Material industri berkekuatan tinggi dan tahan panas. Dicetak di dalam ruang tertutup (enclosure Bambu Lab P1S) untuk mencegah keretakan lapisan.',
-    colorOptions: ['Hitam Industri', 'Putih', 'Abu-Abu Mesin'],
-    imageSrc: '/images/bambu_p1s.png'
   }
 };
 
@@ -174,8 +159,6 @@ export function calculatePrintPrice(
 
   if (materialKey === 'PETG') {
     ratePerGram += 100;
-  } else if (materialKey === 'ABS') {
-    ratePerGram += 150;
   }
 
   // Base machine setup and nozzle prep fee per unique job
