@@ -73,7 +73,7 @@ export const MaterialComparison: React.FC = () => {
                 className={`rounded-2xl border p-6 flex flex-col justify-between transition-all cursor-pointer ${
                   isTabActive
                     ? 'border-emerald-700 dark:border-emerald-500 bg-emerald-50/30 dark:bg-emerald-950/20 ring-2 ring-emerald-700 dark:ring-emerald-500 shadow-md'
-                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xs'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xs'
                 }`}
               >
                 <div>
@@ -137,7 +137,7 @@ export const MaterialComparison: React.FC = () => {
         </div>
 
         {/* Detailed Comparison Table */}
-        <div className="mt-8 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 md:p-8">
+        <div className="mt-8 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 md:p-8">
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
             Tabel Komparasi Teknis PLA vs PETG
           </h3>

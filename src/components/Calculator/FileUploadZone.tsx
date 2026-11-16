@@ -90,7 +90,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             ? 'border-emerald-600 bg-emerald-50/80 dark:bg-emerald-950/40 scale-[1.01]'
             : currentFileName
             ? 'border-emerald-500/70 bg-emerald-50/30 dark:bg-emerald-950/20 hover:border-emerald-600'
-            : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-850'
+            : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800'
         }`}
       >
         <input
@@ -151,7 +151,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
       )}
 
       {/* Quick Sample Selector */}
-      <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-100/90 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-700">
+      <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-100/90 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
         <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 font-medium">
           <FileCode className="w-4 h-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
           <span>Belum punya file 3D? Uji coba contoh instan:</span>
@@ -161,7 +161,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             type="button"
             onClick={() => loadSample('samples/calibration_cube.stl', 'calibration_cube_20mm.stl')}
             disabled={loading}
-            className="text-xs px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 font-medium rounded-lg border border-slate-300 dark:border-slate-700 transition-colors shadow-2xs hover:border-emerald-600"
+            className="text-xs px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium rounded-lg border border-slate-300 dark:border-slate-700 transition-colors shadow-2xs hover:border-emerald-600"
           >
             Kubus Kalibrasi (20 mm)
           </button>
@@ -169,7 +169,7 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             type="button"
             onClick={() => loadSample('samples/mechanical_gear.stl', 'mechanical_gear_sample.stl')}
             disabled={loading}
-            className="text-xs px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 font-medium rounded-lg border border-slate-300 dark:border-slate-700 transition-colors shadow-2xs hover:border-emerald-600"
+            className="text-xs px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium rounded-lg border border-slate-300 dark:border-slate-700 transition-colors shadow-2xs hover:border-emerald-600"
           >
             Gir Roda Gigi
           </button>

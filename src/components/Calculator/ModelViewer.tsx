@@ -254,7 +254,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
           className={`p-2.5 rounded-lg border text-xs font-medium transition-colors shadow-xs ${
             wireframe
               ? 'bg-emerald-700 text-white border-emerald-800'
-              : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-750'
+              : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700'
           }`}
         >
           <Eye className="w-4 h-4" aria-hidden="true" />
@@ -264,7 +264,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
           onClick={handleResetCamera}
           aria-label="Reset Camera View"
           title="Reset Sudut Kamera"
-          className="p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-750 text-xs font-medium transition-colors shadow-xs"
+          className="p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 text-xs font-medium transition-colors shadow-xs"
         >
           <RotateCw className="w-4 h-4" aria-hidden="true" />
         </button>
@@ -280,7 +280,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
       {/* Dimensions Overlay on Bottom-Left */}
       {dimensions && (
-        <div className="absolute bottom-4 left-4 z-10 bg-white/95 dark:bg-slate-850/95 backdrop-blur-xs border border-slate-300 dark:border-slate-700 rounded-xl p-3 shadow-md text-xs text-slate-700 dark:text-slate-300">
+        <div className="absolute bottom-4 left-4 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xs border border-slate-300 dark:border-slate-700 rounded-xl p-3 shadow-md text-xs text-slate-700 dark:text-slate-300">
           <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white mb-1.5 border-b border-slate-200 dark:border-slate-700 pb-1">
             <Maximize2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
             Dimensi Bounding Box Fisik

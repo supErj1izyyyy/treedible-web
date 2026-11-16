@@ -103,7 +103,7 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
         </div>
 
         {/* Selected Material Color Choice */}
-        <div className="mt-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800">
+        <div className="mt-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-2">
             Pilihan Warna ({currentMaterial.name}):
           </label>
@@ -145,7 +145,7 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
                 className={`flex items-start justify-between p-3 rounded-xl border transition-all cursor-pointer ${
                   isSelected
                     ? 'border-emerald-700 dark:border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/30 shadow-xs ring-1 ring-emerald-700 dark:ring-emerald-500'
-                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
                 <div className="flex items-start gap-3">

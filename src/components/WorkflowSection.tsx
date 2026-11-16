@@ -52,7 +52,7 @@ export const WorkflowSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between relative hover:border-slate-300 dark:hover:border-slate-700 transition-all hover:bg-slate-100/50 dark:hover:bg-slate-800/80"
+                className="bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between relative hover:border-slate-300 dark:hover:border-slate-700 transition-all hover:bg-slate-100/50 dark:hover:bg-slate-800/80"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
