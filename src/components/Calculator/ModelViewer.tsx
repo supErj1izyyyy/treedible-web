@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { RotateCw, Eye, Box, Maximize2 } from 'lucide-react';
+import { RotateCw, Eye, Box, Maximize2, Play, Pause } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 interface ModelViewerProps {
@@ -23,6 +23,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
   loading,
   scale = 1
 }) => {
+  const [autoRotate, setAutoRotate] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -225,6 +226,13 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     }
   }, [materialColor, wireframe]);
 
+  // Handle continuous 360 rotation
+  useEffect(() => {
+    if (!controlsRef.current) return;
+    controlsRef.current.autoRotate = autoRotate;
+    controlsRef.current.autoRotateSpeed = 2.5;
+  }, [autoRotate]);
+
   // Reset Camera View
   const handleResetCamera = () => {
     if (!cameraRef.current || !controlsRef.current) return;
@@ -232,7 +240,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
       const maxDim = Math.max(dimensions.x, dimensions.y, dimensions.z, 30);
       const distance = maxDim * 2.2;
       cameraRef.current.position.set(distance * 0.9, distance * 0.8, distance * 1.1);
-      controlsRef.current.target.set(0, dimensions.z / 2, 0);
+      controlsRef.current.target.set(0, dimensions.y / 2, 0);
       controlsRef.current.update();
     } else {
       cameraRef.current.position.set(150, 180, 220);
@@ -257,6 +265,23 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
       {/* Floating Controls Bar */}
       <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+        <button
+          type="button"
+          onClick={() => setAutoRotate(!autoRotate)}
+          aria-label="Toggle Auto-Rotation"
+          title={autoRotate ? "Hentikan Rotasi Otomatis" : "Putar Otomatis 360°"}
+          className={`p-2.5 rounded-lg border text-xs font-medium transition-colors shadow-xs ${
+            autoRotate
+              ? 'bg-emerald-600 text-white border-emerald-700'
+              : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700'
+          }`}
+        >
+          {autoRotate ? (
+            <Pause className="w-4 h-4" aria-hidden="true" />
+          ) : (
+            <Play className="w-4 h-4" aria-hidden="true" />
+          )}
+        </button>
         <button
           type="button"
           onClick={onToggleWireframe}

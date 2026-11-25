@@ -57,7 +57,7 @@ export const CalculatorSection: React.FC = () => {
         const textDecoder = new TextDecoder();
         const objText = textDecoder.decode(buffer);
         const objGroup = loader.parse(objText);
-        
+
         // Merge or extract first geometry from group
         const geometries: THREE.BufferGeometry[] = [];
         objGroup.traverse((child) => {

@@ -9,7 +9,7 @@ export const MATERIALS: Record<MaterialKey, MaterialInfo> = {
     fullName: 'Polylactic Acid',
     density: 1.24, // g/cm³
     basePricePerGram: 750,
-    tempResistance: '50°C - 55°C',
+    tempResistance: '50°C - 5°C',
     strengthRating: 3.5,
     flexibilityRating: 2,
     detailRating: 5,
@@ -185,7 +185,7 @@ export function calculatePrintPrice(
   // Pure linear tariff based on filament weight:
   // e.g. PLA 0.16mm is Rp 750/g, 0.12mm is Rp 850/g, 0.20mm is Rp 500/g
   const materialCost = weightGrams * ratePerGram;
-  
+
   // Unit price rounds to nearest 500 IDR with minimal floor of Rp 1.000
   const unitPrice = Math.max(1000, Math.ceil(materialCost / 500) * 500);
   const totalPrice = unitPrice * quantity;
